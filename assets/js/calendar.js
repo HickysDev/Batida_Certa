@@ -36,8 +36,10 @@ $(document).ready(function () {
             }
         },
 
+        //O que adiciona o botão de editar
         eventContent: function (arg) {
             let title = arg.event.title;
+            let color = arg.event.backgroundColor || arg.event.color || '#000'; // Usa a cor do evento
 
             let container = document.createElement('div');
             container.style.display = 'flex';
@@ -47,16 +49,17 @@ $(document).ready(function () {
             container.style.marginLeft = '8px';
             container.style.marginRight = '8px';
 
+            // Adiciona uma borda lateral com a cor do evento
+            container.style.borderLeft = `4px solid ${color}`;
+            container.style.paddingLeft = '6px';
+
             let titleEl = document.createElement('div');
             titleEl.innerText = title;
-
             titleEl.style.flexGrow = '1';
             titleEl.style.paddingRight = '10px';
-
-            // Aqui o importante: para o texto quebrar e não sair do container
-            titleEl.style.whiteSpace = 'normal';  // permite quebra de linha
-            titleEl.style.wordBreak = 'break-word';  // quebra palavras grandes
-            titleEl.style.overflowWrap = 'break-word'; // reforça quebra de palavras
+            titleEl.style.whiteSpace = 'normal';
+            titleEl.style.wordBreak = 'break-word';
+            titleEl.style.overflowWrap = 'break-word';
 
             container.appendChild(titleEl);
 
@@ -77,6 +80,7 @@ $(document).ready(function () {
 
             return { domNodes: [container] };
         },
+
 
         events: function (fetchInfo, successCallback, failureCallback) {
             $.when(
@@ -136,10 +140,6 @@ $(document).ready(function () {
             return;
         }
 
-        // Mostra o loader
-        $('#calendarLoader').show();
-        $('#calendar').hide();
-
         $.ajax({
             url: 'controller/PontoController.php',
             method: 'POST',
@@ -152,13 +152,20 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (res) {
                 if (res.status === 'ok') {
-                    toastr.success('Ponto salvo com sucesso!');
+                    // Mostra o loader
+                    $('#calendarLoader').show();
+                    $('#calendar').hide();
+
+                    toastr.success(res.mensagem);
                     $('#modalBaterPonto').modal('hide');
                     $('#formBaterPonto')[0].reset();
                     calendar.refetchEvents();
+                } else if (res.status === 'alerta') {
+                    toastr.warning(res.mensagem); // Alerta para ponto já cadastrado
                 } else {
                     toastr.error('Erro ao salvar ponto: ' + res.mensagem);
                 }
+
             },
             error: function (xhr, status, error) {
                 console.error('Erro na requisição AJAX:', error);

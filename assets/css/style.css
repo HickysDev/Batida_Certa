@@ -2,9 +2,44 @@
 body {
   font-family: "Lato", sans-serif;
   padding-top: 70px;
-  background-color: #f8f9fa;
+  background-color: var(--cor-fundo, #f8f9fa);
+  color: var(--cor-texto, #4e4e6a);
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  /* Para footer absoluto */
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  padding-bottom: 10%; /* espaço para o footer */
 }
 
+/* Variáveis padrão para o modo claro */
+:root {
+  --cor-primaria: #1f6cb0;
+  --cor-secundaria: #70a3c4;
+  --cor-texto: #4e4e6a;
+  --cor-titulo: #e7e8f5;
+  --cor-fundo: #e7e8f5;
+  --cor-form: #e7e8f5;
+  --cor-bg-navbar: var(--cor-primaria);
+  --cor-bg-botao: var(--cor-primaria);
+  --cor-botao-hover: #155a8a;
+}
+
+/* Modo escuro */
+body.modo-escuro {
+  --cor-primaria: #70a3c4;
+  --cor-secundaria: #1f6cb0;
+  --cor-texto: #e7e8f5;
+  --cor-titulo: #e7e8f5;
+  --cor-fundo: #4e4e6a;
+  --cor-form: #303043;
+  --cor-bg-navbar: #1f6cb0;
+  --cor-bg-botao: #1f6cb0;
+  --cor-botao-hover: #155a8a;
+}
+
+/* Títulos com Arvo */
 h1,
 h2,
 h3,
@@ -12,23 +47,123 @@ h4,
 h5 {
   font-family: "Arvo", serif;
   font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.navbar-brand {
+  font-family: "Arvo", serif;
+  font-weight: 700;
+}
+/* Nav item cursor */
+.nav-item {
+  cursor: pointer;
+}
+
+/* Navbar customizada */
+.navbar {
+  background-color: var(--cor-bg-navbar) !important;
+  transition: background-color 0.3s ease;
+}
+
+/* Botões primários com cores da paleta */
+.btn-primary {
+  background-color: var(--cor-bg-botao);
+  border-color: var(--cor-bg-botao);
+  transition: background-color 0.3s ease;
+  color: #fff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--cor-botao-hover);
+  border-color: var(--cor-botao-hover);
+  color: #fff;
 }
 
 /* Destaque visual para o dia atual */
 .dia-hoje {
   background-color: #e9f5ff !important;
-  border: 2px solid #0d6efd !important;
+  border: 2px solid var(--cor-primaria, #0d6efd) !important;
 }
 
 /* Estilo dos cards dos dias */
 .card {
   min-height: 200px;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Texto dos horários de ponto */
 .ponto-hora {
   font-size: 0.9rem;
   text-align: left;
+  color: var(--cor-texto);
+}
+
+/* Inputs e selects */
+.form-control,
+.form-select {
+  color: var(--cor-texto);
+  border: 1px solid var(--cor-secundaria);
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+body.modo-escuro .form-control,
+body.modo-escuro .form-select {
+  background-color: var(--cor-form);
+  border-color: var(--cor-primaria);
+  color: var(--cor-texto);
+}
+
+/* Estilo para os selects com ícones no modo escuro */
+body.modo-escuro .form-select {
+  background-color: var(--cor-form);
+  border-color: var(--cor-primaria);
+  color: var(--cor-texto);
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23e7e8f5" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+
+/* Estilo específico para inputs de data e hora */
+body.modo-escuro input[type="date"]::-webkit-calendar-picker-indicator,
+body.modo-escuro input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* Estilo para o dropdown do select */
+body.modo-escuro .form-select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23e7e8f5" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+
+/* Modais */
+.modal-content {
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.modo-escuro .modal-content {
+  background-color: #3b3b57;
+}
+
+/* Toastr */
+.toast {
+  background-color: var(--cor-bg-botao);
+  color: #fff;
+}
+
+body.modo-escuro .toast {
+  background-color: var(--cor-primaria);
 }
 
 /* Responsividade para dispositivos pequenos */
@@ -39,5 +174,155 @@ h5 {
 
   .card {
     min-height: auto;
+  }
+}
+
+/* Aumenta a altura da view de lista no mobile e remove o overflow */
+@media (max-width: 767px) {
+  .fc-listWeek-view .fc-scroller,
+  .fc-listWeek-view .fc-list-table {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .fc .fc-list-table td,
+  .fc .fc-list-table th {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .fc-view-harness.fc-view-harness-active {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .separador {
+    display: none !important;
+  }
+}
+
+.modal-header,
+.modal-title {
+  background-color: var(--cor-primaria) !important;
+  color: var(--cor-titulo) !important;
+}
+
+#calendar thead a {
+  color: var(--cor-titulo) !important;
+  text-decoration: none;
+}
+
+#calendar
+  tbody
+  a:not(.fc-list-day):not(.fc-day):not(.fc-day-sun):not(.fc-day-today):not(
+    .fc-list-day-text
+  ):not(.fc-list-day-side-text) {
+  color: var(--cor-texto) !important;
+  text-decoration: none;
+}
+
+.fc-list-day-text {
+  color: var(--cor-titulo) !important;
+  text-decoration: none;
+}
+
+.fc-list-day-side-text {
+  color: var(--cor-titulo) !important;
+  text-decoration: none;
+}
+
+.fc .fc-list-sticky .fc-list-day > * {
+  color: var(--cor-titulo) !important;
+  background: var(--cor-fundo) !important;
+}
+
+.fc .fc-cell-shaded {
+  background: var(--cor-primaria) !important;
+  color: var(--cor-titulo) !important;
+}
+
+.fc-col-header-cell {
+  background-color: var(--cor-primaria) !important;
+  text-transform: uppercase;
+  font-family: "Lato", sans-serif;
+}
+
+.fc-toolbar-title:first-letter {
+  text-transform: capitalize;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.95) !important; /* Igual ao navbar-brand */
+}
+
+/* Manter o hover um pouco mais claro */
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+/* Estilo para o navbar-brand (título principal) */
+.navbar-brand {
+  font-size: 1.25rem; /* Tamanho padrão do brand, pode ajustar */
+  transition: all 0.3s ease; /* Adiciona transição suave */
+}
+
+/* Estilo para o nav-link (Configurar Jornada) */
+.navbar-nav .nav-link {
+  font-size: 1rem; /* Um pouco menor que o brand */
+  color: rgba(255, 255, 255, 0.9) !important; /* Cor igual ao brand */
+  transition: all 0.3s ease; /* Transição suave para o hover */
+}
+
+/* Efeito de aumento no hover */
+.navbar-nav .nav-link:hover {
+  transform: scale(1.05); /* Aumenta 5% */
+  color: white !important; /* Cor mais intensa no hover */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* Sombra sutil */
+}
+
+/* Opcional: ajuste o ícone do modo escuro para corresponder */
+.navbar-nav .nav-link i.bi {
+  font-size: 1.1rem; /* Tamanho do ícone */
+  transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover i.bi {
+  transform: scale(1.1);
+}
+
+.separador {
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  font-size: 25px;
+}
+
+/* Footer fixo absoluto */
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--cor-bg-navbar) !important;
+  color: #fff;
+  padding: 25px 0;
+  text-align: center;
+  z-index: 10;
+}
+
+/* Espaço extra para o footer no mobile */
+@media (max-width: 767px) {
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--cor-bg-navbar) !important;
+    color: #fff;
+    padding: 25px 0;
+    text-align: center;
+    z-index: 10;
   }
 }

@@ -21,14 +21,17 @@ class PontoController
     {
         extract($this->extrairPost());
 
-        $success = $this->model->salvarPonto($dataPonto, $tipo, $hora);
+        $resultado = $this->model->salvarPonto($dataPonto, $tipo, $hora);
 
-        if ($success) {
+        if ($resultado === 'ok') {
             echo json_encode(['status' => 'ok', 'mensagem' => 'Ponto salvo com sucesso!']);
+        } elseif ($resultado === 'duplicado') {
+            echo json_encode(['status' => 'alerta', 'mensagem' => 'Já existe um ponto cadastrado desse tipo para hoje.']);
         } else {
             echo json_encode(['status' => 'erro', 'mensagem' => 'Erro ao salvar ponto.']);
         }
     }
+
 
     public function listarPontosPorUsuario()
     {

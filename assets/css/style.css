@@ -1,0 +1,43 @@
+/* Espaçamento do topo por causa da navbar fixa */
+body {
+  font-family: "Lato", sans-serif;
+  padding-top: 70px;
+  background-color: #f8f9fa;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Arvo", serif;
+  font-weight: 700;
+}
+
+/* Destaque visual para o dia atual */
+.dia-hoje {
+  background-color: #e9f5ff !important;
+  border: 2px solid #0d6efd !important;
+}
+
+/* Estilo dos cards dos dias */
+.card {
+  min-height: 200px;
+}
+
+/* Texto dos horários de ponto */
+.ponto-hora {
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+/* Responsividade para dispositivos pequenos */
+@media (max-width: 576px) {
+  .ponto-hora {
+    font-size: 0.85rem;
+  }
+
+  .card {
+    min-height: auto;
+  }
+}

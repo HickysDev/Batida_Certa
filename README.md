@@ -28,3 +28,6 @@ Este projeto é uma aplicação web para controle de jornada de trabalho semanal
 - [ ] Responsividade otimizada para dispositivos móveis
 - [ ] Temas claro/escuro personalizados
 - [ ] Atualização do front-end
+- [ ] Configurar banco de dados na rede
+- [ ] Hospedar em algum site
+
